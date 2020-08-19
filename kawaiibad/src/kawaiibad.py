@@ -1,9 +1,11 @@
 import discord
+import os
+
 from discord.ext import commands
+token = os.environ['TOKEN']
 
-class MyBot(commands.Bot):
 
-bot = MyBot(command_prefix = '+&')
+bot = commands.Bot(command_prefix = '+&')
 @bot.remove_command('help')
 
 @bot.event
@@ -24,5 +26,5 @@ async def ping(ctx):
 async def botserver(ctx):
 	await ctx.send('do you really think I have a sever? bruh')
 
-bot.run('NzQ1NzI3NjAxNDQ3OTI3OTE5.Xz1-8w.0-rwLe9e36yXfMQ3ObZeXqyqEEI')
+bot.run(token)
 
