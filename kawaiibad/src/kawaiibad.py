@@ -10,8 +10,9 @@ token = os.environ['TOKEN']
 
 nicknames = open('nicknames.txt','r')
 nicknameslist = nicknames.read().splitlines()
-survey = 'please take survey https://docs.google.com/forms/d/10svvcfz3ocmxj3WZDe_Gr2x2bk1DEbui_VQEHDxZZmM/edit'
+nicknames.close()
 bot = commands.Bot(command_prefix = '+&')
+
 @bot.remove_command('help')
 
 @bot.event
