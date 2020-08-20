@@ -10,6 +10,12 @@ neko404 = open("neko404.txt", "r")
 listneko404 = neko404.read().splitlines()
 
 non404 = []
+for i in listneko404:
+	if i != '':
+		non404.append(int(i))
+listneko404 = non404
+non404 = []
+
 for i in range(100,299):
 	if i in listneko404:
 		continue
