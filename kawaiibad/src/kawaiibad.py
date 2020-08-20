@@ -5,8 +5,12 @@ import urllib
 import nekos
 
 from discord.ext import commands
+
 token = os.environ['TOKEN']
 
+nicknames = open('nicknames.txt','r')
+nicknameslist = nicknames.read().splitlines()
+survey = 'please take survey https://docs.google.com/forms/d/10svvcfz3ocmxj3WZDe_Gr2x2bk1DEbui_VQEHDxZZmM/edit'
 bot = commands.Bot(command_prefix = '+&')
 @bot.remove_command('help')
 
@@ -21,7 +25,7 @@ async def help(ctx): ##help text to a dm
 
 @bot.command() ##good debug tool
 async def ping(ctx):
-    await ctx.send('pong')
+    await ctx.send('pong\n')
 
 @bot.command() ##here becase the old one had it
 async def botserver(ctx):
@@ -29,34 +33,64 @@ async def botserver(ctx):
 
 @bot.command()
 async def neko(ctx): ##pulls random neko from site that the og used
-	message = nekos.img('neko')
-	await ctx.send(message)
+	imageurl = nekos.img('neko')
+	embed = discord.Embed()
+	embed.set_image(url=imageurl)
+	await ctx.send(embed= embed)
 
 @bot.command()
 async def f(ctx, arg):
-	await ctx.send((str(ctx.author)) + "has paid their respects for " + str(arg))
+	await ctx.send(ctx.author.mention + "has paid their respects for " + str(arg) + '\n' + survey)
 
 @bot.command()
-async def cookie(ctx, arg):
-	await ctx.send('**' + str(arg) + '**, you got a :cookie: from **' + str(ctx.author) + '**')
+async def cookie(ctx, member: discord.Member):
+	await ctx.send('**' + member.mention + '**, you got a :cookie: from **' + ctx.author.mention + '**\n' + survey)
 
 @bot.command()
 async def baka(ctx):
-	message = nekos.img('baka')
-	await ctx.send(message)
+	imageurl = nekos.img('baka')
+	embed = discord.Embed()
+	embed.set_image(url=imageurl)
+	await ctx.send(embed = embed)
 @bot.command()
-async def pat(ctx, arg):
-	message = "**" + str(arg) + "** you got pat by **" + str(ctx.author) + '**\n' + str(nekos.img('pat'))
+async def pat(ctx, member: discord.Member):
+	imageurl = nekos.img('pat')
+	message = "**" + member.mention + "** you got pat by **" + ctx.author.mention + '**'
+	embed = discord.Embed(description = message)
+	embed.set_image(url=imageurl)
+	await ctx.send(embed = embed)
+
+@bot.command()
+async def kiss(ctx, member: discord.Member):
+	imageurl = nekos.img('kiss')
+	message = '**' + member.mention + '** you got kissed by **' + ctx.author.mention + '**'
+	embed = discord.Embed(description = message)
+	embed.set_image(url=imageurl)
+	await ctx.send(embed = embed)
+@bot.command()
+async def hug(ctx, member: discord.Member):
+	imageurl = nekos.img('hug')
+	message = '**' + member.mention + '** you got hugged by **' + ctx.author.mention + '**'
+	embed = discord.Embed(description = message)
+	embed.set_image(url=imageurl)
+	await ctx.send(embed = embed)
+
+@bot.command()
+async def nickname(ctx):
+	message = "nickname choosen is " + str(nicknameslist[random.randint(0, len(nicknameslist))] + '\n' + survey)
 	await ctx.send(message)
 
 @bot.command()
-async def kiss(ctx, arg):
-	message = "**" + str(arg) + '** you got kissed by **' + str(ctx.author) + '**\n' + str(nekos.img('kiss'))
-	await ctx.send(message)
+async def about(ctx):
+	embed = discord.Embed(type = 'rich', description = "i am kawaiibad")
+	await ctx.send(embed=embed)
+
 @bot.command()
-async def hug(ctx, arg):
-	message = '**' + str(arg) + '** you got hugged by **' + str(ctx.author) + '**\n' + str(nekos.img('hug'))
-	await ctx.send(message)
+async def githublink(ctx):
+	await ctx.send("https://github.com/chapstick404/kawaiibad")
+##@bot.command()
+##async def when_mentioned(ctx):
+##	await ctx.send("REEEEEEEEEEEEE")
 
 bot.run(token)
 
