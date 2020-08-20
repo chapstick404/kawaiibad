@@ -2,25 +2,10 @@ import discord
 import os
 import random
 import urllib
+import nekos
 
 from discord.ext import commands
 token = os.environ['TOKEN']
-
-neko404 = open("neko404.txt", "r") ##sets up the list of 404 error nekos
-listneko404 = neko404.read().splitlines()
-
-non404 = []
-for i in listneko404:
-	if i != '':
-		non404.append(int(i))
-listneko404 = non404
-non404 = []
-
-for i in range(100,299):
-	if i in listneko404:
-		continue
-	else:
-		non404.append(i)
 
 bot = commands.Bot(command_prefix = '+&')
 @bot.remove_command('help')
@@ -32,7 +17,7 @@ async def on_ready():
 @bot.command()
 async def help(ctx): ##help text to a dm
 	usr =ctx.author
-	await usr.send("`Ping			pong\nbotserver			my home is here\nneko			NEKO NEKO NEE!`\n`f			put a f in the chat`\n`cookie			someone wants cookies`\n")
+	await usr.send("```Ping			pong\nbotserver			my home is here\nneko			NEKO NEKO NEE!\nf			put a f in the chat\ncookie			someone wants cookies```\n")
 
 @bot.command() ##good debug tool
 async def ping(ctx):
@@ -44,9 +29,9 @@ async def botserver(ctx):
 
 @bot.command()
 async def neko(ctx): ##pulls random neko from site that the og used
-	message = ('https://cdn.nekos.life/neko/neko_' + str(non404[random.randint(0,len(non404))]) + '.png')
-	await ctx.send(message)
-	await ctx.send('if this command returned a website with a 404 error please contact chapstick404#7405')
+	message = nekos.img('neko')
+	await ctx.send('```' + message '```')
+
 @bot.command()
 async def f(ctx, arg):
 	await ctx.send((str(ctx.author)) + "has paid their respects for " + str(arg))
